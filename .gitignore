@@ -1,0 +1,38 @@
+# Configuracao local (varia entre computadores)
+.env
+
+# Arquivo criado automaticamente pelo Vitis/Vivado
+vitis_hls.log
+.Xil
+
+# Caches e ambientes Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Lancadores locais; execute python <script>.py
+*.cmd
+/generate
+/simulate
+/deploy
+
+# Temporarios e resultados gerados
+/tmp/
+/output/
+*.log
+*.jou
+*.str
+*.vcd
+*.vcd.complete
+*.wdb
+*.bit
+*.xsa
+*.dcp
+*.elf
+BOOT.bin
+**/comparacoes/
+**/arquivos_boot/

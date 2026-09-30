@@ -72,6 +72,18 @@ Use caminhos absolutos. Separe múltiplas pastas por **ponto e vírgula**; as pa
 
 Os menus procuram arquivos `.cir` e `.sp` em `CIRCUIT_DIRS`. Na geração por argumentos, também são aceitas as extensões `.spi`, `.spice`, `.ckt` e `.net`.
 
+Para manter os arquivos organizados, recomenda-se criar uma subpasta para cada circuito e usar o mesmo nome na pasta e no netlist: `<circuito>/<circuito>.cir`, dentro de uma das pastas configuradas em `CIRCUIT_DIRS`. Por exemplo:
+
+```text
+circuitos/
+├── rlc_series/
+│   └── rlc_series.cir
+└── rc_series/
+    └── rc_series.cir
+```
+
+Essa organização mantém os CSVs de referência do PSIM, as imagens de boot e as comparações de cada circuito em sua própria pasta. É uma recomendação de organização; os menus também encontram netlists em outras estruturas, pois a busca é recursiva.
+
 Defina no netlist o timestep com uma linha como:
 
 ```text

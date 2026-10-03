@@ -398,8 +398,8 @@ export_ip_user_files -of_objects $bd_file -no_script -sync -force -quiet
 reset_simulation -mode behavioral sim_1
 """
                     runner_contents = f"""open_project {{{tcl_path(project)}}}
-{refresh_bd}set_property top {{{wrapper}}} [get_filesets sim_1]
-update_compile_order -fileset sim_1
+set_property top {{{wrapper}}} [get_filesets sim_1]
+{refresh_bd}update_compile_order -fileset sim_1
 {open_design}
 {launch}
 source {{{tcl_path(simulation_tcl)}}}

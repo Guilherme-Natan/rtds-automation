@@ -47,16 +47,6 @@ def _positive_spice(value: str) -> float:
     return parsed
 
 
-def _positive_float(value: str) -> float:
-    try:
-        parsed = float(value)
-    except ValueError as exc:
-        raise ValueError("Use um numero positivo.") from exc
-    if parsed <= 0:
-        raise ValueError("Use um numero positivo.")
-    return parsed
-
-
 def _interactive_arguments() -> argparse.Namespace:
     files = circuit_files()
     chosen_file = files[select("Escolha o circuito", [path.name for path in files])[0]]
@@ -70,13 +60,7 @@ def _interactive_arguments() -> argparse.Namespace:
             default="",
             validator=_positive_spice,
         )
-    ip_clock = input_value(
-        "IP clock",
-        "Informe o periodo em ns. Enter usa 20 ns; Ctrl+C cancela.",
-        default="20",
-        validator=_positive_float,
-    )
-    return argparse.Namespace(netlist=chosen_file, methods=methods, time_step=time_step, ip_clock=ip_clock, hard_reset=False, interactive=True)
+    return argparse.Namespace(netlist=chosen_file, methods=methods, time_step=time_step, hard_reset=False, interactive=True)
 
 
 def _parse_args() -> argparse.Namespace:
@@ -94,7 +78,6 @@ def _parse_args() -> argparse.Namespace:
     parser.add_argument("--backward", action="store_true")
     parser.add_argument("--trapezoidal", action="store_true")
     parser.add_argument("--timestep")
-    parser.add_argument("--ip-clock", type=float, default=20.0)
     parser.add_argument("--hard-reset", action="store_true")
     args = parser.parse_args()
     flags = [name for name in METHODS if getattr(args, name)]
@@ -188,8 +171,6 @@ def main() -> int:
     time_step = args.time_step if args.time_step is not None else netlist_time_step(netlist)
     if time_step is None or time_step <= 0:
         raise AutomationError("Informe --timestep ou defina .STEP no netlist.")
-    if args.ip_clock <= 0:
-        raise AutomationError("Clock do IP invalido.")
     divider = pulse_divider(time_step)
     print("=== Etapa 1: preparacao da placa e verificacao de requisitos ===")
     check_requirements()
@@ -205,7 +186,7 @@ def main() -> int:
             print(("Hard reset solicitado" if args.hard_reset else "Retomando") + f" '{method}' a partir da etapa {start_stage}.")
         actions = (
             (2, "geracao do codigo C++", lambda: generate_cpp(netlist, method, time_step)),
-            (3, "criacao e implementacao do IP", lambda: create_ip(netlist, method, args.ip_clock)),
+            (3, "criacao e implementacao do IP", lambda: create_ip(netlist, method)),
             (4, "criacao do projeto Vivado", lambda: create_vivado_project(netlist, method)),
             (5, "criacao do block design", lambda: create_block_design(netlist, method, time_step, divider)),
             (6, "sintese e verificacao de slack", lambda: synthesize_vivado(netlist, method)),

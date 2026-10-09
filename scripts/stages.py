@@ -147,9 +147,7 @@ def _hls_timing(hls_project: Path, top: str) -> tuple[float, float, float, float
     return target, estimated, uncertainty, float(achieved.group(1))
 
 
-def create_ip(netlist: Path, method: str, ip_clock: float) -> None:
-    if ip_clock <= 0:
-        raise AutomationError("O periodo do clock do IP deve ser positivo.")
+def create_ip(netlist: Path, method: str) -> None:
     vitis_hls = find_tool("vitis_hls", "Vitis_HLS")
     for circuit, name, method_dir in _method_context(netlist, method):
         cpp_file = method_dir / "codigos_cpp" / f"{circuit}_{name}.cpp"
@@ -163,13 +161,13 @@ set_top {{{top}}}
 add_files {{{tcl_path(cpp_file)}}}
 open_solution -reset solution1 -flow_target vivado
 set_part {{{BOARD_DEVICE_PART}}}
-create_clock -period {ip_clock:.17g} -name default
+create_clock -period 20 -name default
 config_export -format ip_catalog -rtl vhdl
 csynth_design
 export_design -flow impl -rtl vhdl -format ip_catalog
 exit
 """
-        print(f"Criando IP '{top}' para {name} (clock: {ip_clock:.17g} ns)...")
+        print(f"Criando IP '{top}' para {name} (clock: 20 ns)...")
         _run_temporary(vitis_hls, ["-f"], tcl_file, contents)
         target, estimated, uncertainty, implemented = _hls_timing(hls_project, top)
         print("\n============================================================")

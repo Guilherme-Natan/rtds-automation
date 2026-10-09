@@ -72,8 +72,8 @@ def _interactive_arguments() -> argparse.Namespace:
         )
     ip_clock = input_value(
         "IP clock",
-        "Informe o periodo em ns. Enter usa 15 ns; Ctrl+C cancela.",
-        default="15",
+        "Informe o periodo em ns. Enter usa 20 ns; Ctrl+C cancela.",
+        default="20",
         validator=_positive_float,
     )
     return argparse.Namespace(netlist=chosen_file, methods=methods, time_step=time_step, ip_clock=ip_clock, hard_reset=False, interactive=True)
@@ -94,7 +94,7 @@ def _parse_args() -> argparse.Namespace:
     parser.add_argument("--backward", action="store_true")
     parser.add_argument("--trapezoidal", action="store_true")
     parser.add_argument("--timestep")
-    parser.add_argument("--ip-clock", type=float, default=15.0)
+    parser.add_argument("--ip-clock", type=float, default=20.0)
     parser.add_argument("--hard-reset", action="store_true")
     args = parser.parse_args()
     flags = [name for name in METHODS if getattr(args, name)]

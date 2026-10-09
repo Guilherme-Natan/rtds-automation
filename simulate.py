@@ -149,7 +149,7 @@ def _prepare_until_five(config: Config) -> None:
         if start <= 2:
             generate_cpp(config.netlist, method, time_step)
         if start <= 3:
-            create_ip(config.netlist, method, 15.0)
+            create_ip(config.netlist, method, 20.0)
         if start <= 4:
             create_vivado_project(config.netlist, method)
         if start <= 5:
@@ -315,7 +315,7 @@ def _run_simulations(config: Config) -> None:
             if start <= 2:
                 generate_cpp(netlist, method, time_step)
             if start <= 3:
-                create_ip(netlist, method, 15.0)
+                create_ip(netlist, method, 20.0)
             if start <= 4:
                 create_vivado_project(netlist, method)
             if start <= 5:

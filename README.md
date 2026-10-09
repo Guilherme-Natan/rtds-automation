@@ -110,7 +110,7 @@ Use **setas** para mover a seleção, **Espaço** para marcar ou desmarcar itens
 
 ```text
 python generate.py --help
-python generate.py /caminho/circuito.cir --forward --timestep 20n --ip-clock 15
+python generate.py /caminho/circuito.cir --forward --timestep 20n --ip-clock 20
 python generate.py /caminho/circuito.cir --forward --backward
 python generate.py /caminho/circuito.cir --methods forward trapezoidal
 python generate.py /caminho/circuito.cir --all
@@ -124,7 +124,7 @@ Escolha pelo menos um método com os flags individuais, `--methods` ou `--all`. 
 | `--methods <métodos...>` | Seleciona explicitamente uma lista de métodos. |
 | `--all` | Executa os três métodos. |
 | `--timestep <valor>` | Timestep em segundos ou notação SPICE; sem a opção, utiliza `.STEP` do netlist. |
-| `--ip-clock <ns>` | Período solicitado para o clock do IP HLS; padrão: **15 ns**. Não é uma frequência em MHz. |
+| `--ip-clock <ns>` | Período solicitado para o clock do IP HLS; padrão: **20 ns**. Não é uma frequência em MHz. |
 | `--hard-reset` | Reexecuta a geração a partir do C++, substituindo artefatos das etapas. Também pode ser usado sozinho para abrir os menus. |
 
 ### Etapas do fluxo
